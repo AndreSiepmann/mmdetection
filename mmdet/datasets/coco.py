@@ -595,7 +595,7 @@ class CocoDataset(CustomDataset):
                  logger=None,
                  jsonfile_prefix=None,
                  classwise=False,
-                 proposal_nums=(100, 300, 1000),
+                 proposal_nums=(3, 3, 3),
                  iou_thrs=None,
                  metric_items=None):
         """Evaluation in COCO protocol.
