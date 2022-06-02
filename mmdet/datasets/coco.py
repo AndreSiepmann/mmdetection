@@ -390,7 +390,7 @@ class CocoDataset(CustomDataset):
                           metrics,
                           logger=None,
                           classwise=False,
-                          proposal_nums=(100, 300, 1000),
+                          proposal_nums=(100, 3, 1000),
                           iou_thrs=None,
                           metric_items=None):
         """Instance segmentation and object detection evaluation in COCO
