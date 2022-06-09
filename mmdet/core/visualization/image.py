@@ -184,6 +184,7 @@ def draw_masks(ax, img, masks, color=None, with_edge=True, alpha=0.8):
         color = np.array(color, dtype=np.uint8)
     polygons = []
     for i, mask in enumerate(masks):
+        print(i)
         if with_edge:
             contours, _ = bitmap_to_polygon(mask)
             polygons += [Polygon(c) for c in contours]
