@@ -321,7 +321,7 @@ def imshow_det_bboxes(img,
         mask_palette = get_palette(mask_color, max_label + 1)
         colors = [mask_palette[label] for label in labels]
         colors = np.array(colors, dtype=np.uint8)
-        draw_masks(ax, img, segms, color=None , with_edge=True)
+        draw_masks(ax, img, segms, colors , with_edge=True)
 #changed color in draw_masks from colors to None
         if num_bboxes < segms.shape[0]:
             segms = segms[num_bboxes:]

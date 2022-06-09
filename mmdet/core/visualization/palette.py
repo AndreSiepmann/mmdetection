@@ -38,7 +38,7 @@ def get_palette(palette, num_classes):
     elif palette == 'random' or palette is None:
         state = np.random.get_state()
         # random color
-        np.random.seed(42)
+        np.random.seed(10)
         palette = np.random.randint(0, 256, size=(num_classes, 3))
         np.random.set_state(state)
         dataset_palette = [tuple(c) for c in palette]
