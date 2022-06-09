@@ -179,6 +179,7 @@ def draw_masks(ax, img, masks, color=None, with_edge=True, alpha=0.8):
     """
     taken_colors = set([0, 0, 0])
     if color is None:
+        print("Color is set to none")
         random_colors = np.random.randint(0, 255, (masks.size(0), 3))
         color = [tuple(c) for c in random_colors]
         color = np.array(color, dtype=np.uint8)
