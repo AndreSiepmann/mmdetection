@@ -58,7 +58,7 @@ def _get_adaptive_scales(areas, min_area=800, max_area=30000):
     return scales
 
 
-def _get_bias_color(base, max_dist=30):
+def _get_bias_color(base, max_dist=100):
     """Get different colors for each masks.
 
     Get different colors for each masks by adding a bias
@@ -71,10 +71,10 @@ def _get_bias_color(base, max_dist=30):
     Returns:
         ndarray: The new color for a mask with the shape of (3, ).
     """
-    new_color = np.random.randint(
-        low=0, high=255, size=3)
-    #new_color = base + np.random.randint(
-     #   low=-max_dist, high=max_dist + 1, size=3)
+    #new_color = np.random.randint(
+       # low=0, high=255, size=3)
+    new_color = base + np.random.randint(
+        low=-max_dist, high=max_dist + 1, size=3)
     return np.clip(new_color, 0, 255, new_color)
 
 
@@ -194,8 +194,10 @@ def draw_masks(ax, img, masks, color=None, with_edge=True, alpha=0.8):
             polygons += [Polygon(c) for c in contours]
 
         color_mask = color[i]
+        print(color_mask)
         while tuple(color_mask) in taken_colors:
             color_mask = _get_bias_color(color_mask)
+            
         taken_colors.add(tuple(color_mask))
 
         mask = mask.astype(bool)
