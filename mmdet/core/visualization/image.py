@@ -71,10 +71,10 @@ def _get_bias_color(base, max_dist=100):
     Returns:
         ndarray: The new color for a mask with the shape of (3, ).
     """
-    #new_color = np.random.randint(
-       # low=0, high=255, size=3)
-    new_color = base + np.random.randint(
-        low=-max_dist, high=max_dist + 1, size=3)
+    new_color = np.random.randint(
+       low=0, high=255, size=3)
+    #new_color = base + np.random.randint(
+        #low=-max_dist, high=max_dist + 1, size=3)
     return np.clip(new_color, 0, 255, new_color)
 
 
