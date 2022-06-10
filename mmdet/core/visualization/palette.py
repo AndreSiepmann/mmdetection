@@ -36,14 +36,13 @@ def get_palette(palette, num_classes):
     elif isinstance(palette, tuple):
         dataset_palette = [palette] * num_classes
     elif palette == 'random' or palette is None:
-        from mmdet.datasets import CocoDataset, CocoPanopticDataset
-        dataset_palette = CocoDataset.PALETTE
-        #state = np.random.get_state()
+        
+        state = np.random.get_state()
         # random color
-        #np.random.seed(12)
-        #palette = np.random.randint(0, 256, size=(15, 3))
-        #np.random.set_state(state)
-        #dataset_palette = [tuple(c) for c in palette]
+        np.random.seed(12)
+        palette = np.random.randint(0, 256, size=(15, 3))
+        np.random.set_state(state)
+        dataset_palette = [tuple(c) for c in palette]
     elif palette == 'coco':
         from mmdet.datasets import CocoDataset, CocoPanopticDataset
         dataset_palette = CocoDataset.PALETTE

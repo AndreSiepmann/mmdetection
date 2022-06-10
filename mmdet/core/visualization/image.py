@@ -179,13 +179,14 @@ def draw_masks(ax, img, masks, color=None, with_edge=True, alpha=0.8):
     """
     taken_colors = set([0, 0, 0])
     if color is None:
-        print("Color is set to none")
+        
         random_colors = np.random.randint(0, 255, (masks.size(0), 3))
         color = [tuple(c) for c in random_colors]
         color = np.array(color, dtype=np.uint8)
     polygons = []
+    num =0
     for i, mask in enumerate(masks):
-        print(i)
+        num +=1
         if with_edge:
             contours, _ = bitmap_to_polygon(mask)
             polygons += [Polygon(c) for c in contours]
@@ -197,7 +198,7 @@ def draw_masks(ax, img, masks, color=None, with_edge=True, alpha=0.8):
 
         mask = mask.astype(bool)
         img[mask] = img[mask] * (1 - alpha) + color_mask * alpha
-
+    print(num)
     p = PatchCollection(
         polygons, facecolor='none', edgecolors='w', linewidths=1, alpha=0.8)
     ax.add_collection(p)
