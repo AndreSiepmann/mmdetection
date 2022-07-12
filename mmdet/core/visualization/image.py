@@ -96,6 +96,7 @@ def draw_bboxes(ax, bboxes, color='g', alpha=0.8, thickness=2):
     polygons = []
     for i, bbox in enumerate(bboxes):
         bbox_int = bbox.astype(np.int32)
+        print("bbox:", bbox_int)
         poly = [[bbox_int[0], bbox_int[1]], [bbox_int[0], bbox_int[3]],
                 [bbox_int[2], bbox_int[3]], [bbox_int[2], bbox_int[1]]]
         np_poly = np.array(poly).reshape((4, 2))
@@ -192,7 +193,7 @@ def draw_masks(ax, img, masks, color=None, with_edge=True, alpha=0.8):
         if with_edge:
             contours, _ = bitmap_to_polygon(mask)
             polygons += [Polygon(c) for c in contours]
-            print(polygons)
+            print("polygons:", polygons.get_xy())
 
         color_mask = color[i]
         print(color_mask)
