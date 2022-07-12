@@ -12,6 +12,9 @@ from ..mask.structures import bitmap_to_polygon
 from ..utils import mask2ndarray
 from .palette import get_palette, palette_val
 
+
+import json
+
 __all__ = [
     'color_val_matplotlib', 'draw_masks', 'draw_bboxes', 'draw_labels',
     'imshow_det_bboxes', 'imshow_gt_det_bboxes'
@@ -194,6 +197,12 @@ def draw_masks(ax, img, masks, color=None, with_edge=True, alpha=0.8):
             contours, _ = bitmap_to_polygon(mask)
             polygons += [Polygon(c) for c in contours]
             print("polygons:", polygons[0].get_xy())
+            pols = {"polygons":[]}
+            for p in polygons:
+                pols["polygons"].append(p.get_xy())
+            json_object = json.dumps(pols, indent=3)
+            with open ("mask_info.json", "w") as outfile:
+                outfile.write(json_object)
 
         color_mask = color[i]
         print(color_mask)
