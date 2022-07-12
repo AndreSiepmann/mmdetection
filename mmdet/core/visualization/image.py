@@ -199,7 +199,8 @@ def draw_masks(ax, img, masks, color=None, with_edge=True, alpha=0.8):
             print("polygons:", polygons[0].get_xy())
             pols = {"polygons":[]}
             for p in polygons:
-                pols["polygons"].append(p.get_xy())
+                p_l = p.get_xy().tolist()
+                pols["polygons"].append(p_l)
             json_object = json.dumps(pols, indent=3)
             with open ("mask_info.json", "w") as outfile:
                 outfile.write(json_object)
