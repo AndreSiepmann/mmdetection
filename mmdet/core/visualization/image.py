@@ -325,16 +325,16 @@ def imshow_det_bboxes(img,
         areas = (bboxes[:, 3] - bboxes[:, 1]) * (bboxes[:, 2] - bboxes[:, 0])
         scales = _get_adaptive_scales(areas)
         scores = bboxes[:, 4] if bboxes.shape[1] == 5 else None
-        draw_labels(
-            ax,
-            labels[:num_bboxes],
-            positions,
-            scores=scores,
-            class_names=class_names,
-            color=text_colors,
-            font_size=font_size,
-            scales=scales,
-            horizontal_alignment=horizontal_alignment)
+        #draw_labels(
+            #ax,
+           # labels[:num_bboxes],
+           # positions,
+           # scores=scores,
+           # class_names=class_names,
+            #color=text_colors,
+           # font_size=font_size,
+            #scales=scales,
+            #horizontal_alignment=horizontal_alignment)
 
     if segms is not None:
         mask_palette = get_palette(mask_color, max_label + 1)
@@ -355,15 +355,15 @@ def imshow_det_bboxes(img,
                 areas.append(stats[largest_id, -1])
             areas = np.stack(areas, axis=0)
             scales = _get_adaptive_scales(areas)
-            draw_labels(
-                ax,
-                labels[num_bboxes:],
-                positions,
-                class_names=class_names,
-                color=text_colors,
-                font_size=font_size,
-                scales=scales,
-                horizontal_alignment=horizontal_alignment)
+            #draw_labels(
+              #  ax,
+              #  labels[num_bboxes:],
+               # positions,
+               # class_names=class_names,
+               # color=text_colors,
+                #font_size=font_size,
+               # scales=scales,
+               # horizontal_alignment=horizontal_alignment)
 
     plt.imshow(img)
 
