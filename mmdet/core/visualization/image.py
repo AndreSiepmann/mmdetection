@@ -190,36 +190,65 @@ def draw_masks(ax, img, masks, color=None, with_edge=True, alpha=0.8):
         color = [tuple(c) for c in random_colors]
         color = np.array(color, dtype=np.uint8)
     polygons = []
-    num =0
+       ## prepare dict where polygon coordinates will be saved in
+    pols_json = {}
+    ## iterate masks (one mask per cable)
     for i, mask in enumerate(masks):
-        num +=1
-        if with_edge:
-            contours, _ = bitmap_to_polygon(mask)
-            polygons += [Polygon(c) for c in contours]
-            print("polygons:", polygons[0].get_xy())
-            pols = {"polygons":[]}
-            for p in polygons:
-                p_l = p.get_xy().tolist()
-                pols["polygons"].append(p_l)
-            json_object = json.dumps(pols, indent=3)
-            with open ("mask_info.json", "w") as outfile:
-                outfile.write(json_object)
-
+        ## assign color
         color_mask = color[i]
-        print(color_mask)
         while tuple(color_mask) in taken_colors:
             color_mask = _get_bias_color(color_mask)
-            
         taken_colors.add(tuple(color_mask))
-
         mask = mask.astype(bool)
         img[mask] = img[mask] * (1 - alpha) + color_mask * alpha
-    print(num)
-    p = PatchCollection(
-        polygons, facecolor='none', edgecolors='w', linewidths=1, alpha=0.8)
+        ## add + initialize sublayer to dict, if not already existing (key = index of cable, starting with 0)
+        pols_json[i] = pols_json.setdefault(i, [])
+        ## get polygons (=contours of segmented areas) that form the currently iterated cable
+        if with_edge:
+            contours, _ = bitmap_to_polygon(mask)
+            polygons = [Polygon(c) for c in contours]
+            ## iterate polygons & add them to the dict variable
+            for p in polygons:
+                p_l = p.get_xy().tolist()
+                pols_json[i].append(p_l)
+            json_object = json.dumps(pols_json, indent=3)
+            ## export dict variable to *.json-file
+            with open ("data/polygons.json", "w") as outfile:
+                outfile.write(json_object)
+    ## finalize plot
+    p = PatchCollection(polygons, facecolor='none', edgecolors='w', linewidths=1, alpha=0.8)
     ax.add_collection(p)
-
     return ax, img
+    #num =0
+    #for i, mask in enumerate(masks):
+     #   num +=1
+      #  if with_edge:
+       #     contours, _ = bitmap_to_polygon(mask)
+        #    polygons += [Polygon(c) for c in contours]
+         #   print("polygons:", polygons[0].get_xy())
+          #  pols = {"polygons":[]}
+           # for p in polygons:
+           #     p_l = p.get_xy().tolist()
+            #    pols["polygons"].append(p_l)
+           # json_object = json.dumps(pols, indent=3)
+           # with open ("mask_info.json", "w") as outfile:
+            #    outfile.write(json_object)
+
+    #    color_mask = color[i]
+     #   print(color_mask)
+      #  while tuple(color_mask) in taken_colors:
+       #     color_mask = _get_bias_color(color_mask)
+            
+      #  taken_colors.add(tuple(color_mask))
+
+       # mask = mask.astype(bool)
+        #img[mask] = img[mask] * (1 - alpha) + color_mask * alpha
+   # print(num)
+   # p = PatchCollection(
+    #    polygons, facecolor='none', edgecolors='w', linewidths=1, alpha=0.8)
+    #ax.add_collection(p)
+
+    #return ax, img
 
 
 def imshow_det_bboxes(img,
